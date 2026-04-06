@@ -3,4 +3,12 @@ name = "increasing_array"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "increasing_array"
+path = "src/main.rs"
+
+[[bin]]
+name = "benchmark"
+path = "src/bin/benchmark.rs"
+
 [dependencies]
