@@ -1,12 +1,14 @@
 // Integration tests for CSES 2165 – Tower of Hanoi
 //
-// Each test feeds n to the compiled binary via stdin, then verifies:
-//   1. The declared move count k equals 2^n - 1 (the proven minimum).
-//   2. The number of printed moves matches k.
-//   3. Every move is legal (source stack is non-empty, no larger-on-smaller).
-//   4. After all moves, every disk resides on stack 3.
+// Tests the binary (recursive solver via stdin/stdout) as well as all three
+// algorithm implementations exposed by the library.
 
 use std::process::Command;
+use tower_of_hanoi::{solve_iterative_bits, solve_iterative_stacks, solve_recursive};
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
 
 /// Spawn the binary, pipe `input` to its stdin, and return its stdout as a String.
 fn run_with_input(input: &str) -> String {
@@ -86,7 +88,7 @@ fn parse_output(output: &str) -> (usize, Vec<(u8, u8)>) {
 }
 
 // ---------------------------------------------------------------------------
-// Test cases – smallest input through the maximum constraint (n = 16).
+// Binary tests (recursive algorithm via stdin/stdout)
 // ---------------------------------------------------------------------------
 
 #[test]
@@ -138,4 +140,38 @@ fn test_n16() {
     let (k, moves) = parse_output(&output);
     assert_eq!(k, 65535); // 2^16 - 1
     validate_solution(16, &moves);
+}
+
+// ---------------------------------------------------------------------------
+// Library tests — all three algorithms produce valid, optimal solutions
+// ---------------------------------------------------------------------------
+
+#[test]
+fn test_all_algorithms_valid_and_optimal() {
+    for n in 1..=16 {
+        let expected_len = (1usize << n) - 1;
+
+        let r = solve_recursive(n);
+        assert_eq!(r.len(), expected_len, "recursive n={n}");
+        validate_solution(n, &r);
+
+        let b = solve_iterative_bits(n);
+        assert_eq!(b.len(), expected_len, "bits n={n}");
+        validate_solution(n, &b);
+
+        let s = solve_iterative_stacks(n);
+        assert_eq!(s.len(), expected_len, "stacks n={n}");
+        validate_solution(n, &s);
+    }
+}
+
+#[test]
+fn test_all_algorithms_produce_same_moves() {
+    for n in 1..=10 {
+        let r = solve_recursive(n);
+        let b = solve_iterative_bits(n);
+        let s = solve_iterative_stacks(n);
+        assert_eq!(r, b, "recursive vs bits differ at n={n}");
+        assert_eq!(r, s, "recursive vs stacks differ at n={n}");
+    }
 }

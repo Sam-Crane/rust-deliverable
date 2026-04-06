@@ -3,4 +3,12 @@ name = "tower_of_hanoi"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "tower_of_hanoi"
+path = "src/main.rs"
+
+[[bin]]
+name = "benchmark"
+path = "src/bin/benchmark.rs"
+
 [dependencies]
