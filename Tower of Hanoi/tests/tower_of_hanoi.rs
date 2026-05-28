@@ -20,7 +20,12 @@ fn run_with_input(input: &str) -> String {
         .spawn()
         .and_then(|mut child| {
             use std::io::Write;
-            child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
             child.wait_with_output()
         })
         .unwrap();
@@ -79,11 +84,19 @@ fn parse_output(output: &str) -> (usize, Vec<(u8, u8)>) {
     let moves: Vec<(u8, u8)> = lines[1..]
         .iter()
         .map(|line| {
-            let parts: Vec<u8> = line.trim().split_whitespace().map(|x| x.parse().unwrap()).collect();
+            let parts: Vec<u8> = line
+                .trim()
+                .split_whitespace()
+                .map(|x| x.parse().unwrap())
+                .collect();
             (parts[0], parts[1])
         })
         .collect();
-    assert_eq!(moves.len(), k, "Declared move count doesn't match actual moves");
+    assert_eq!(
+        moves.len(),
+        k,
+        "Declared move count doesn't match actual moves"
+    );
     (k, moves)
 }
 

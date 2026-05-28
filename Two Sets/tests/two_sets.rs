@@ -20,7 +20,12 @@ fn run_with_input(input: &str) -> String {
         .spawn()
         .and_then(|mut child| {
             use std::io::Write;
-            child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
             child.wait_with_output()
         })
         .unwrap();
@@ -57,9 +62,9 @@ fn assert_all_algorithms(n: u64, should_exist: bool) {
 
     for (name, result) in &results {
         if should_exist {
-            let (set1, set2) = result.as_ref().unwrap_or_else(|| {
-                panic!("{name} returned None for n={n}")
-            });
+            let (set1, set2) = result
+                .as_ref()
+                .unwrap_or_else(|| panic!("{name} returned None for n={n}"));
             validate_partition(n, set1, set2);
         } else {
             assert!(result.is_none(), "{name} should return None for n={n}");
@@ -78,10 +83,16 @@ fn test_binary_n7() {
     assert_eq!(lines[0], "YES");
     // Verify the partition is valid by parsing.
     let k1: usize = lines[1].parse().unwrap();
-    let s1: Vec<u64> = lines[2].split_whitespace().map(|x| x.parse().unwrap()).collect();
+    let s1: Vec<u64> = lines[2]
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
     assert_eq!(s1.len(), k1);
     let k2: usize = lines[3].parse().unwrap();
-    let s2: Vec<u64> = lines[4].split_whitespace().map(|x| x.parse().unwrap()).collect();
+    let s2: Vec<u64> = lines[4]
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
     assert_eq!(s2.len(), k2);
     validate_partition(7, &s1, &s2);
 }
@@ -117,10 +128,16 @@ fn test_binary_n4() {
     let lines: Vec<&str> = output.lines().collect();
     assert_eq!(lines[0], "YES");
     let k1: usize = lines[1].parse().unwrap();
-    let s1: Vec<u64> = lines[2].split_whitespace().map(|x| x.parse().unwrap()).collect();
+    let s1: Vec<u64> = lines[2]
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
     assert_eq!(s1.len(), k1);
     let k2: usize = lines[3].parse().unwrap();
-    let s2: Vec<u64> = lines[4].split_whitespace().map(|x| x.parse().unwrap()).collect();
+    let s2: Vec<u64> = lines[4]
+        .split_whitespace()
+        .map(|x| x.parse().unwrap())
+        .collect();
     assert_eq!(s2.len(), k2);
     validate_partition(4, &s1, &s2);
 }

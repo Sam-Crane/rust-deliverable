@@ -3,8 +3,8 @@
 // Generates random grids of varying sizes (deterministic) and measures
 // wall-clock time for each algorithm, printing a comparison table.
 
-use std::time::Instant;
 use counting_rooms::{solve_bfs, solve_dfs, solve_union_find};
+use std::time::Instant;
 
 /// Generate a random grid with ~70% floor / ~30% wall using a simple LCG.
 fn generate_grid(n: usize, m: usize, seed: u64) -> Vec<Vec<u8>> {
@@ -21,7 +21,11 @@ fn generate_grid(n: usize, m: usize, seed: u64) -> Vec<Vec<u8>> {
         .collect()
 }
 
-fn bench<F: Fn(&[Vec<u8>]) -> usize>(f: F, data: &[Vec<u8>], iterations: u32) -> std::time::Duration {
+fn bench<F: Fn(&[Vec<u8>]) -> usize>(
+    f: F,
+    data: &[Vec<u8>],
+    iterations: u32,
+) -> std::time::Duration {
     let start = Instant::now();
     for _ in 0..iterations {
         std::hint::black_box(f(data));
@@ -41,7 +45,13 @@ fn main() {
     for &(n, m) in sizes {
         let grid = generate_grid(n, m, 42);
         let cells = n * m;
-        let iters = if cells <= 10_000 { 100 } else if cells <= 100_000 { 30 } else { 5 };
+        let iters = if cells <= 10_000 {
+            100
+        } else if cells <= 100_000 {
+            30
+        } else {
+            5
+        };
 
         let t_bfs = bench(solve_bfs, &grid, iters);
         let t_dfs = bench(solve_dfs, &grid, iters);

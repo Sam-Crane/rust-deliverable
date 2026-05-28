@@ -4,7 +4,7 @@
 // the iterative DFS algorithm (safe for maximum constraint), and prints
 // the n counts separated by spaces.
 
-use std::io::{Read, Write, BufWriter};
+use std::io::{BufWriter, Read, Write};
 use subordinates::solve_iterative;
 
 fn main() {

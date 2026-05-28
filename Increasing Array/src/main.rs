@@ -3,8 +3,8 @@
 // Reads n and the array from stdin, solves using the greedy algorithm,
 // and prints the minimum number of moves.
 
-use std::io::Read;
 use increasing_array::solve_greedy;
+use std::io::Read;
 
 fn main() {
     let mut input = String::new();

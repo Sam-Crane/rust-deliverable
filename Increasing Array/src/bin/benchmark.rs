@@ -3,8 +3,8 @@
 // Generates random arrays of varying sizes and measures wall-clock time
 // for each algorithm, printing a comparison table.
 
-use std::time::Instant;
 use increasing_array::{solve_fold, solve_greedy, solve_prefix_max};
+use std::time::Instant;
 
 fn generate_array(n: usize, seed: u64) -> Vec<i64> {
     // Simple LCG pseudo-random generator for reproducible benchmarks.
@@ -36,7 +36,13 @@ fn main() {
 
     for &n in sizes {
         let data = generate_array(n, 42);
-        let iters = if n <= 10_000 { 1000 } else if n <= 100_000 { 100 } else { 10 };
+        let iters = if n <= 10_000 {
+            1000
+        } else if n <= 100_000 {
+            100
+        } else {
+            10
+        };
 
         let t_greedy = bench(solve_greedy, &data, iters);
         let t_fold = bench(solve_fold, &data, iters);

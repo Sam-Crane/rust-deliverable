@@ -4,8 +4,8 @@
 // (prefix == suffix, excluding the whole string) in ascending order,
 // space-separated. Uses the KMP algorithm.
 
-use std::io::Read;
 use finding_borders::solve_kmp;
+use std::io::Read;
 
 fn main() {
     let mut input = String::new();

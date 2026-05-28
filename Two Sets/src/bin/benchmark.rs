@@ -6,7 +6,11 @@
 use std::time::Instant;
 use two_sets::{solve_greedy, solve_pairs, solve_recursive};
 
-fn bench<F: Fn(u64) -> Option<(Vec<u64>, Vec<u64>)>>(f: F, n: u64, iterations: u32) -> std::time::Duration {
+fn bench<F: Fn(u64) -> Option<(Vec<u64>, Vec<u64>)>>(
+    f: F,
+    n: u64,
+    iterations: u32,
+) -> std::time::Duration {
     let start = Instant::now();
     for _ in 0..iterations {
         std::hint::black_box(f(n));
@@ -25,7 +29,13 @@ fn main() {
     println!("{}", "-".repeat(60));
 
     for &n in values {
-        let iters = if n <= 10_000 { 1000 } else if n <= 100_000 { 100 } else { 10 };
+        let iters = if n <= 10_000 {
+            1000
+        } else if n <= 100_000 {
+            100
+        } else {
+            10
+        };
 
         let t_greedy = bench(solve_greedy, n, iters);
         let t_pairs = bench(solve_pairs, n, iters);

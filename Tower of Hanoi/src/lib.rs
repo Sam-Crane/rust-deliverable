@@ -115,4 +115,3 @@ pub fn solve_iterative_stacks(n: u32) -> Vec<(u8, u8)> {
 
     moves
 }
-

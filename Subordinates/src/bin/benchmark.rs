@@ -19,7 +19,11 @@ fn generate_tree(n: usize, seed: u64) -> Vec<usize> {
         .collect()
 }
 
-fn bench<F: Fn(&[usize]) -> Vec<usize>>(f: F, data: &[usize], iterations: u32) -> std::time::Duration {
+fn bench<F: Fn(&[usize]) -> Vec<usize>>(
+    f: F,
+    data: &[usize],
+    iterations: u32,
+) -> std::time::Duration {
     let start = Instant::now();
     for _ in 0..iterations {
         std::hint::black_box(f(data));
@@ -38,7 +42,13 @@ fn main() {
 
     for &n in sizes {
         let tree = generate_tree(n, 42);
-        let iters = if n <= 10_000 { 100 } else if n <= 100_000 { 20 } else { 10 };
+        let iters = if n <= 10_000 {
+            100
+        } else if n <= 100_000 {
+            20
+        } else {
+            10
+        };
 
         let t_rec = bench(solve_recursive, &tree, iters);
         let t_it = bench(solve_iterative, &tree, iters);

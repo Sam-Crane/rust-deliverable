@@ -20,7 +20,12 @@ fn run_with_input(input: &str) -> String {
         .spawn()
         .and_then(|mut child| {
             use std::io::Write;
-            child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
             child.wait_with_output()
         })
         .unwrap();
@@ -143,7 +148,10 @@ fn test_all_random_large() {
     let bosses = generate_tree(10_000, 12345);
     let it = solve_iterative(&bosses);
     let rb = solve_reverse_bfs(&bosses);
-    assert_eq!(it, rb, "iterative vs reverse-bfs differ on large random tree");
+    assert_eq!(
+        it, rb,
+        "iterative vs reverse-bfs differ on large random tree"
+    );
     assert_eq!(it[0], 9999);
     // Skip recursive on large input to avoid potential stack issues on chains.
 }

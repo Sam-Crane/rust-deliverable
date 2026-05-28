@@ -3,8 +3,8 @@
 // Reads grid from stdin and prints the number of rooms (connected
 // components of floor cells) using the BFS algorithm.
 
-use std::io::Read;
 use counting_rooms::solve_bfs;
+use std::io::Read;
 
 fn main() {
     let mut input = String::new();

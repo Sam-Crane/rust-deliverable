@@ -3,8 +3,8 @@
 // Tests the binary (KMP via stdin/stdout) as well as all three algorithm
 // implementations exposed by the library.
 
-use std::process::Command;
 use finding_borders::{solve_hashing, solve_kmp, solve_z};
+use std::process::Command;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -19,7 +19,12 @@ fn run_with_input(input: &str) -> String {
         .spawn()
         .and_then(|mut child| {
             use std::io::Write;
-            child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
             child.wait_with_output()
         })
         .unwrap();
@@ -144,9 +149,17 @@ fn test_all_random_strings_agree() {
         for &alpha in &[2u8, 3, 5, 26] {
             let s = random_string(30, alpha, seed * 31 + alpha as u64);
             let expected = naive_borders(&s);
-            assert_eq!(solve_kmp(&s), expected, "KMP failed seed={seed} alpha={alpha}");
+            assert_eq!(
+                solve_kmp(&s),
+                expected,
+                "KMP failed seed={seed} alpha={alpha}"
+            );
             assert_eq!(solve_z(&s), expected, "Z failed seed={seed} alpha={alpha}");
-            assert_eq!(solve_hashing(&s), expected, "Hashing failed seed={seed} alpha={alpha}");
+            assert_eq!(
+                solve_hashing(&s),
+                expected,
+                "Hashing failed seed={seed} alpha={alpha}"
+            );
         }
     }
 }

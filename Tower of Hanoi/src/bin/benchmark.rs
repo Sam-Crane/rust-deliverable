@@ -25,7 +25,13 @@ fn main() {
 
     for &n in disk_counts {
         // Fewer iterations for larger n to keep runtime reasonable.
-        let iters = if n <= 15 { 100 } else if n <= 20 { 10 } else { 3 };
+        let iters = if n <= 15 {
+            100
+        } else if n <= 20 {
+            10
+        } else {
+            3
+        };
 
         let t_rec = bench(|| solve_recursive(n), iters);
         let t_bits = bench(|| solve_iterative_bits(n), iters);

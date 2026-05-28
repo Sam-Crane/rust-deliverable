@@ -119,12 +119,8 @@ pub fn solve_hashing(s: &[u8]) -> Vec<usize> {
     }
 
     // Hash of substring s[l..r] (half-open).
-    let hash1 = |l: usize, r: usize| -> u64 {
-        (h1[r] + MOD1 - h1[l] * p1[r - l] % MOD1) % MOD1
-    };
-    let hash2 = |l: usize, r: usize| -> u64 {
-        (h2[r] + MOD2 - h2[l] * p2[r - l] % MOD2) % MOD2
-    };
+    let hash1 = |l: usize, r: usize| -> u64 { (h1[r] + MOD1 - h1[l] * p1[r - l] % MOD1) % MOD1 };
+    let hash2 = |l: usize, r: usize| -> u64 { (h2[r] + MOD2 - h2[l] * p2[r - l] % MOD2) % MOD2 };
 
     let mut borders = Vec::new();
     for k in 1..n {

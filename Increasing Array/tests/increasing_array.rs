@@ -3,8 +3,8 @@
 // Tests the binary (greedy solver via stdin/stdout) as well as all three
 // algorithm implementations exposed by the library.
 
-use std::process::Command;
 use increasing_array::{solve_fold, solve_greedy, solve_prefix_max};
+use std::process::Command;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -20,7 +20,12 @@ fn run_with_input(input: &str) -> String {
         .spawn()
         .and_then(|mut child| {
             use std::io::Write;
-            child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
             child.wait_with_output()
         })
         .unwrap();

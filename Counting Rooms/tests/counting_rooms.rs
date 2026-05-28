@@ -3,8 +3,8 @@
 // Tests the binary (BFS via stdin/stdout) as well as all three algorithm
 // implementations exposed by the library.
 
-use std::process::Command;
 use counting_rooms::{solve_bfs, solve_dfs, solve_union_find};
+use std::process::Command;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -19,7 +19,12 @@ fn run_with_input(input: &str) -> String {
         .spawn()
         .and_then(|mut child| {
             use std::io::Write;
-            child.stdin.take().unwrap().write_all(input.as_bytes()).unwrap();
+            child
+                .stdin
+                .take()
+                .unwrap()
+                .write_all(input.as_bytes())
+                .unwrap();
             child.wait_with_output()
         })
         .unwrap();

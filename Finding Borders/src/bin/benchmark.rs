@@ -3,8 +3,8 @@
 // Generates test strings of varying sizes (random, all-same, repeating
 // pattern) and measures wall-clock time for each algorithm.
 
-use std::time::Instant;
 use finding_borders::{solve_hashing, solve_kmp, solve_z};
+use std::time::Instant;
 
 /// Generate a random lowercase string with deterministic LCG.
 fn random_string(n: usize, seed: u64) -> Vec<u8> {
@@ -46,16 +46,19 @@ fn run_table(label: &str, builder: impl Fn(usize) -> Vec<u8>) {
 
     for &n in &[10_000usize, 100_000, 1_000_000] {
         let s = builder(n);
-        let iters = if n <= 10_000 { 200 } else if n <= 100_000 { 50 } else { 10 };
+        let iters = if n <= 10_000 {
+            200
+        } else if n <= 100_000 {
+            50
+        } else {
+            10
+        };
 
         let t_kmp = bench(solve_kmp, &s, iters);
         let t_z = bench(solve_z, &s, iters);
         let t_h = bench(solve_hashing, &s, iters);
 
-        println!(
-            "n={:<11} {:>15.3?} {:>15.3?} {:>15.3?}",
-            n, t_kmp, t_z, t_h
-        );
+        println!("n={:<11} {:>15.3?} {:>15.3?} {:>15.3?}", n, t_kmp, t_z, t_h);
     }
 }
 
